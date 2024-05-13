@@ -1,0 +1,23 @@
+.custom-form {
+  width: 100%;
+  @media (min-width: 768px) {
+    width: 75%;
+  }
+}
+
+.form-tittle {
+  font-size: 30px;
+  letter-spacing: 1px;
+  color: $blue-400;
+  font-weight: bold;
+}
+
+.img-logo {
+  max-width: 50%;
+  border-radius: 50%;
+}
+
+.img-logo--navbar {
+  max-width: 20%;
+  border-radius: 50%;
+}

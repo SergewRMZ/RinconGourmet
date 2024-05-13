@@ -1,0 +1,9 @@
+.navbar-color {
+  background-color: var(--color__primario);
+}
+
+@media (max-width: 768px) {
+  .formulario {
+    width: 75%; /* Cambiar el ancho del contenedor en dispositivos móviles */
+  }
+}

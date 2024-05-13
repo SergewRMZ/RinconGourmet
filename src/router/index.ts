@@ -1,19 +1,42 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import isAuthenticatedGuard from './auth-guard';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'login-admin',
+    component: () => import(/* webpackChunkName: "Login" */ '@/modules/users/views/Login.vue')
   },
+
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/admin/home',
+    name: 'HomeAdministrador',
+    component: () => import(/* webpackChunkName: "HomeAdmin" */ '@/modules/users/views/HomeAdmin.vue'),
+    beforeEnter: isAuthenticatedGuard
+  },
+
+  {
+    path: '/admin/menu',
+    name: 'Menu',
+    component: () => import(/* webpackChunkName: "MenuAdmin" */ '@/modules/menu/views/Menu.vue')
+  },
+
+  {
+    path: '/admin/inventory',
+    name: 'Inventory',
+    component: () => import(/* webpackChunkName: "Inventario" */ '@/modules/inventory/views/Inventario.vue')
+  },
+
+  {
+    path: '/admin/reservations',
+    name: 'Reservation',
+    component: () => import(/* webpackChunckName: "Reservation" */ '@/modules/reservation/views/Reservation.vue')
+  },
+
+  {
+    path: '/admin/users',
+    name: 'Usuarios',
+    component: () => import(/* webpackChunckName: "Usuarios" */ '@/modules/users/views/Usuarios.vue')
   }
 ]
 
@@ -22,4 +45,4 @@ const router = createRouter({
   routes
 })
 
-export default router
+export default router;
