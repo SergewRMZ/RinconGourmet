@@ -15,6 +15,8 @@ library.add(faArrowLeft);
 import './css/styles.scss';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'animate.css';
+import Swal from 'sweetalert2';
+
 createApp(App)
 .component('font-awesome-icon', FontAwesomeIcon)
 .use(router)

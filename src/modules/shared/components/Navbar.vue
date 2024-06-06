@@ -89,6 +89,6 @@ export default {
   }
 
   div .router-link-exact-active {
-    color: #1C8ADE;
+    color: #fff58c;
   }
 </style>
