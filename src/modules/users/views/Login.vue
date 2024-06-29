@@ -90,7 +90,6 @@ export default {
 
   methods: {
     ...mapActions('user', ['login', 'saludar']),
-    
     async handleSubmit() {
       try {
         this.isLoading = true;

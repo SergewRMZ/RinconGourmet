@@ -34,7 +34,7 @@
           </li>
 
           <li class="nav-item">
-            <router-link v-if="this.isLogged" :to="{ name: 'Menu' }" class="nav-link">Menú</router-link>
+            <router-link v-if="this.isLogged" :to="{ name: 'CrearProducto' }" class="nav-link">Menú</router-link>
           </li>
           
           <li class="nav-item">

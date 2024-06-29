@@ -4,6 +4,9 @@ import TypeUser from "@/interfaces/user-interface";
 interface UserState {
   isLogged: boolean,
   token: string | null,
+  userId: string | null, 
+  name: string | null,
+  email: string | null,
   message_error: string | null
 }
 
@@ -11,20 +14,38 @@ const userStore = {
   namespaced: true,
 
   state: (): UserState => ({
-    isLogged: localStorage.getItem('logged') === 'true',
+    isLogged: sessionStorage.getItem('logged') === 'true',
     token: sessionStorage.getItem('TOKEN') || null,
     message_error: '',
+    userId: null, 
+    name: null,
+    email: null,
   }),
 
   mutations: {
     setLoggedIn(state: UserState, isLogin: boolean) {
       state.isLogged = isLogin;
-      localStorage.setItem('logged', isLogin.toString());
+      sessionStorage.setItem('logged', isLogin.toString());
     },
     
     setToken(state: UserState, token:string | null) {
       state.token = token;
       sessionStorage.setItem('TOKEN', token!);
+    },
+
+    setUserId(state: UserState, id: string | null) {
+      state.userId = id;
+      sessionStorage.setItem('userId', id!);
+    },
+
+    setName(state: UserState, name: string | null) {
+      state.name = name;
+      sessionStorage.setItem('nombre', name!);
+    },
+
+    setEmail (state: UserState, email: string | null) {
+      state.email = email;
+      sessionStorage.setItem('email', email!);
     },
 
     setMessage(state: UserState, message:string | null) {
@@ -36,18 +57,28 @@ const userStore = {
     async login ({ commit }:any, user:TypeUser) {
       try {
         const data = await User.loginUser(user);
+        if (data.user.role[0] !== 'ADMIN_ROLE') throw new Error('Acceso denegado, necesitas ser administrador');
+
         commit('setToken', data.token);
-        commit('setLoggedIn', true); // Establece estado de autenticación
+        commit('setName', data.user.name);
+        commit('setEmail', data.user.email);
+        commit('setUserId', data.user.id);
+        commit('setLoggedIn', true); 
       } 
       
       catch (error:any) {
-        commit('setMessage', error.response.data.error);
+        commit('setMessage', error.response ? error.response.data.error : error);
         throw error;
       }
     },
 
     async logout ({ commit }: any) {
       sessionStorage.removeItem('TOKEN');
+      sessionStorage.removeItem('email');
+      sessionStorage.removeItem('userId');
+      sessionStorage.removeItem('nombre');
+      sessionStorage.removeItem('logged');
+      
       commit('setLoggedIn', false);
       await new Promise (resolve => setTimeout(resolve, 500));
     }

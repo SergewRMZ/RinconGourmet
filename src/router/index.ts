@@ -18,7 +18,20 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/admin/menu',
     name: 'Menu',
-    component: () => import(/* webpackChunkName: "MenuAdmin" */ '@/modules/menu/views/Menu.vue')
+    component: () => import(/* webpackChunkName: "MenuAdmin" */ '@/modules/menu/layout/menuLayout.vue'),
+    children: [
+      {
+        path: 'create',
+        name: 'CrearProducto', 
+        component: () => import(/* webpackChunkName: "CrearProducto" */ '@/modules/menu/views/CrearProducto.vue'),
+      },
+
+      {
+        path: 'productos',
+        name: 'ListarProductos',
+        component: () => import(/* webpackChunkName: "ListarProductos" */ '@/modules/menu/views/ListarProductos.vue')
+      },
+    ]
   },
 
   {
