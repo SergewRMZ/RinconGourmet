@@ -64,14 +64,14 @@
 import { Api } from '@/api/api';
 import { mapActions, mapState } from 'vuex';
 import Product from '../helpers/Product';
-import { mostrarMensaje } from '@/alerts/alerts';
+import { mostrarError, mostrarMensaje } from '@/alerts/alerts';
 
 export default {
   data () {
     return {
-      name: '',
-      description: '',
-      price: 0,
+      name: 'Pay de Limón',
+      description: 'Pay de limón delicioso',
+      price: 50,
       idCategory: '',
       image: null,
     }
@@ -106,10 +106,10 @@ export default {
         }
 
         const responseProducto = await Product.crearProducto(data);
-        console.log(response);
-
+        console.log(responseProducto);
       } catch (error) {
-        console.error(error);
+        console.log(error);
+        mostrarError('Error', error);
       }
     },
 
@@ -122,7 +122,6 @@ export default {
   },
 
   mounted() {
-    mostrarMensaje('Producto creado', 'Producto creado correctamente');
     try {
       this.getCategories();
     } catch (error) {

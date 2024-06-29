@@ -15,7 +15,7 @@ const CategoryStore = {
   mutations: {
     setCategories (state: CategoryState, categories: CategoryInterface[]) {
       state.categories = categories;
-      console.log('Categorías', state.categories);
+      // console.log('Categorías', state.categories);
     },
   },
 
@@ -23,8 +23,6 @@ const CategoryStore = {
     async getCategories ({ commit }:any) {
       const data = await Category.getCategories();
       commit('setCategories', data.categories)
-      console.log(data);
-
     }
   }
 };

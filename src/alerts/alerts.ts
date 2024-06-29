@@ -16,3 +16,19 @@ export const mostrarMensaje = (tittle: string, message: string) => {
   });
 }
 
+export const mostrarError = (tittle: string, message: string) => {
+  Swal.fire({
+    title: tittle,
+    text: `Error: ${message}`,
+    icon: 'error',
+    background: 'var(--color__primario)', 
+    color: '#fff',
+    confirmButtonText: 'Aceptar',
+    customClass: {
+      confirmButton: 'swal-btn__danger'
+    },
+
+    buttonsStyling: false
+  });
+}
+

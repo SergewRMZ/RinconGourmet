@@ -1,9 +1,17 @@
-.swal-btn {
-  background-color:var(--color__morado);
+@mixin btn-color($bg-color) {
+  background-color: $bg-color;
   color: #fff;
-  width: 150px;
+  width: 200px;
   height: 50px;
   border-radius: 10px;
   font-size: 20px;
-  border: none;
+  cursor: pointer;
+}
+
+.swal-btn {
+  @include btn-color(var(--color__morado));
+}
+
+.swal-btn__danger {
+  @include btn-color(var(--color__rojo));
 }
