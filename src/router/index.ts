@@ -49,7 +49,20 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/admin/users',
     name: 'Usuarios',
-    component: () => import(/* webpackChunckName: "Usuarios" */ '@/modules/users/views/Usuarios.vue')
+    component: () => import(/* webpackChunckName: "Usuarios" */ '@/modules/users/layout/usuarioLayout.vue'),
+    children: [
+      {
+        path: 'form',
+        name: 'RegistrarEmpleado', 
+        component: () => import(/* webpackChunkName: "RegistrarEmpleado" */ '@/modules/users/views/RegistrarEmpleado.vue'),
+      },
+
+      {
+        path: 'empleados',
+        name: 'ListarEmpleado',
+        component: () => import(/* webpackChunkName: "ListarEmpleado" */ '@/modules/users/views/ListarEmpleado.vue')
+      },
+    ]
   }
 ]
 
