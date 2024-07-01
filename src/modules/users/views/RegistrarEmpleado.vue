@@ -53,10 +53,10 @@ import { mostrarError, mostrarMensaje } from '@/alerts/alerts';
 export default {
   data() {
     return {
-      name: '',
-      email: '',
-      password: '',
-      role: '',
+      name: 'Yael',
+      email: 'juan@gmail.com',
+      password: '12345678',
+      role: 'ADMIN_ROLE',
     };
   },
 
@@ -68,11 +68,11 @@ export default {
           name: this.name,
           email: this.email,
           password: this.password,
-          role: this.role
+          rol: 'ADMIN_ROLE'
         };
 
         const responseUser = await this.registerUser(data);
-        console.log(responseUser);
+        // console.log(data);
         mostrarMensaje('Éxito', 'Empleado registrado exitosamente');
       } catch (error) {
         console.log(error);

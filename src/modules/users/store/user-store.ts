@@ -73,6 +73,7 @@ const userStore = {
     async registerUser({ commit }: any, user: TypeUser) {
       try {
         const data = await User.registerUser(user);
+        console.log(data);
         return data;
       } catch (error: any) {
         commit('setMessage', error.response ? error.response.data.error : error.message);
