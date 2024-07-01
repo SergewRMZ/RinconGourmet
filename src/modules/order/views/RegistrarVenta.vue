@@ -102,7 +102,7 @@ import { mapActions, mapState } from 'vuex';
 export default {
   data() {
     return {
-      clientName: 'Yael',
+      clientName: '',
       searchProduct: '',
       saleDate: '',
       saleTime: '',

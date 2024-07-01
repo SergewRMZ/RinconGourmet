@@ -1,107 +1,82 @@
 <template>
-  <div>
-    <h5 class="card-title">Registrar Empleado</h5>
-    <form @submit.prevent="submitForm" ref="form" class="needs-validation" novalidate>
-      <div class="mb-3">
-        <label for="name" class="form-label">Nombre Completo</label>
-        <input
-          v-model="employee.name"
-          type="text"
-          class="form-control"
-          id="name"
-          placeholder="Nombre Completo"
-          required
-        />
-        <div class="invalid-feedback">
-          Por favor ingresa el nombre completo.
-        </div>
+  <div class="container">
+    <div class="card w-50 mx-auto mt-5">
+      <div class="card-body">
+        <h5 class="card-title mt-3">Registrar Empleado</h5>
+        <form @submit.prevent="registrarEmpleado">
+          <div class="mb-5">
+            <input
+              v-model="name"
+              type="text"
+              class="form-control mt-3"
+              placeholder="Nombre Completo"
+              required
+            />
+
+            <input
+              v-model="email"
+              type="email"
+              class="form-control mt-3"
+              placeholder="Correo"
+              required
+            />
+
+            <input
+              v-model="password"
+              type="password"
+              class="form-control mt-3"
+              placeholder="Contraseña"
+              required
+            />
+
+            <select class="form-select mt-3" v-model="role" aria-label="Default select example" required>
+              <option value="" disabled selected>Seleccionar Rol</option>
+              <option value="Personal de cocina">Personal de cocina</option>
+              <option value="Personal de limpieza">Personal de limpieza</option>
+              <option value="Personal de sala">Personal de sala</option>
+            </select>
+
+            <button class="btn btn-primary mt-5 w-100" type="submit">
+              Guardar
+            </button>
+          </div>
+        </form>
       </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Correo</label>
-        <input
-          v-model="employee.email"
-          type="email"
-          class="form-control"
-          id="email"
-          placeholder="Correo"
-          required
-        />
-        <div class="invalid-feedback">
-          Por favor ingresa un correo válido.
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Contraseña</label>
-        <input
-          v-model="employee.password"
-          type="password"
-          class="form-control"
-          id="password"
-          placeholder="Contraseña"
-          required
-        />
-        <div class="invalid-feedback">
-          Por favor ingresa una contraseña.
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="role" class="form-label">Seleccionar Rol</label>
-        <select v-model="employee.role" class="form-select" id="role" required>
-          <option value="" disabled>Seleccionar Rol</option>
-          <option value="Personal de cocina">Personal de cocina</option>
-          <option value="Personal de limpieza">Personal de limpieza</option>
-          <option value="Personal de sala">Personal de sala</option>
-        </select>
-        <div class="invalid-feedback">
-          Por favor selecciona un rol.
-        </div>
-      </div>
-      <button class="btn btn-primary" type="submit">Guardar</button>
-    </form>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import { mostrarError, mostrarMensaje } from '@/alerts/alerts';
+
 export default {
   data() {
     return {
-      employee: {
-        name: '',
-        email: '',
-        password: '',
-        role: ''
-      },
-      editing: false,
-      editingId: null
+      name: '',
+      email: '',
+      password: '',
+      role: '',
     };
   },
+
   methods: {
-    submitForm() {
-      if (this.$refs.form && this.$refs.form.checkValidity()) {
-        if (this.editing) {
-          this.$emit('edit-employee', { ...this.employee, id: this.editingId });
-          this.resetForm();
-        } else {
-          this.$emit('add-employee', { ...this.employee, id: Date.now().toString() });
-          this.resetForm();
-        }
-      } else {
-        if (this.$refs.form) {
-          this.$refs.form.classList.add('was-validated');
-        }
-      }
-    },
-    resetForm() {
-      this.employee = {
-        name: '',
-        email: '',
-        password: '',
-        role: ''
-      };
-      this.editing = false;
-      this.editingId = null;
-      if (this.$refs.form) {
-        this.$refs.form.classList.remove('was-validated');
+    ...mapActions('user', ['registerUser']),
+    async registrarEmpleado() {
+      try {
+        const data = {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          rol: 'ADMIN_ROLE'
+        };
+
+        const responseUser = await this.registerUser(data);
+        // console.log(data);
+        mostrarMensaje('Éxito', 'Empleado registrado exitosamente');
+      } catch (error) {
+        console.log(error);
+        mostrarError('Error', error.response.data.error || 'Error al registrar el empleado');
       }
     }
   }

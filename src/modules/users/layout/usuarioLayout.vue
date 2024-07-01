@@ -1,67 +1,53 @@
 <template>
   <div>
     <div class="row">
-      <nav class="col-md-3 bg-black sidebar">
-        <div>
+      <nav class="col-md-3 sidebar">
+        <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <router-link class="nav-link btn btn-primary pt-3 pb-3" :to="{ name: 'RegistrarEmpleado'}" exact>Registrar Empleado</router-link>
+              <router-link class="nav-link btn btn-primary py-2 px-3 mb-2" :to="{ name: 'RegistrarEmpleado'}" exact>Registrar Empleado</router-link>
             </li>
-            <li class="nav-item">
-              <router-link class="nav-link btn btn-primary pt-3 pb-3" :to="{ name: 'ListarEmpleado'}" exact>Listar Empleados</router-link>
-            </li>
-
-            <!-- <li class="nav-item">
-              <router-link class="nav-link btn btn-primary pt-3 pb-3" :to="{ name: 'Inventory'}" exact>Registrar Inventario</router-link>
-            </li> -->
           </ul>
         </div>
       </nav>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-4">
-        <router-view :employees="employees" @add-employee="addEmployee" @edit-employee="editEmployee" @delete-employee="deleteEmployee" />
+        <router-view/>
       </main>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      employees: []
-    };
-  },
-  methods: {
-    addEmployee(newEmployee) {
-      this.employees.push(newEmployee);
-    },
-    editEmployee(updatedEmployee) {
-      const index = this.employees.findIndex(e => e.id === updatedEmployee.id);
-      if (index !== -1) {
-        this.employees.splice(index, 1, updatedEmployee);
-      }
-    },
-    deleteEmployee(employeeId) {
-      this.employees = this.employees.filter(e => e.id !== employeeId);
-    }
-  }
-};
-</script>
 
 <style scoped>
 .nav-link {
   font-weight: bold;
   color: #ffffff;
   font-size: 18px;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .nav-link.router-link-exact-active {
-  color: #479aff;
+  background-color: #479aff;
 }
 
 .sidebar {
+  background-color: #000; /* Cambia el color de fondo de la barra lateral */
   height: 100vh;
-  padding: 20px 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.sidebar-sticky {
+  position: sticky;
+  top: 20px; /* Ajusta la posición del contenido para que no quede pegado al borde superior */
+}
+
+.nav-item {
+  margin-bottom: 10px; /* Espacio entre elementos de la lista */
+}
+
+.main-content {
+  padding-top: 20px; /* Ajusta el espacio superior del contenido principal */
 }
 </style>

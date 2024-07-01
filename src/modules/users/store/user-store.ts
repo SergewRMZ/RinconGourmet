@@ -7,7 +7,8 @@ interface UserState {
   userId: string | null, 
   name: string | null,
   email: string | null,
-  message_error: string | null
+  message_error: string | null,
+  email_validated: string | null
 }
 
 const userStore = {
@@ -17,9 +18,10 @@ const userStore = {
     isLogged: sessionStorage.getItem('logged') === 'true',
     token: sessionStorage.getItem('TOKEN') || null,
     message_error: '',
-    userId: null, 
-    name: null,
-    email: null,
+    userId: sessionStorage.getItem('userId') || null, 
+    name: sessionStorage.getItem('nombre') || null,
+    email: sessionStorage.getItem('email') || null,
+    email_validated: sessionStorage.getItem('email_validated') || null,
   }),
 
   mutations: {
@@ -50,6 +52,10 @@ const userStore = {
 
     setMessage(state: UserState, message:string | null) {
       state.message_error = message;
+    },
+
+    setEmailValidated (state: UserState, email_validated: string) {
+      sessionStorage.setItem('email_validated', email_validated!);
     }
   },
 
@@ -59,16 +65,39 @@ const userStore = {
         const data = await User.loginUser(user);
         if (data.user.role[0] !== 'ADMIN_ROLE') throw new Error('Acceso denegado, necesitas ser administrador');
 
+        console.log(data);
         commit('setToken', data.token);
         commit('setName', data.user.name);
         commit('setEmail', data.user.email);
         commit('setUserId', data.user.id);
-        commit('setLoggedIn', true); 
+        commit('setLoggedIn', true);
+        commit('setEmailValidated', data.user.emailValidated) 
       } 
       
       catch (error:any) {
         commit('setMessage', error.response ? error.response.data.error : error);
         throw error;
+      }
+    },
+
+    async registerUser({ commit }: any, user: TypeUser) {
+      try {
+        const data = await User.registerUser(user);
+        console.log(data);
+        return data;
+      } catch (error: any) {
+        commit('setMessage', error.response ? error.response.data.error : error.message);
+        throw error;
+      }
+    },
+
+    async validateEmail ({ commit }: any) {
+      try {
+        const data = await User.validateEmail();
+        console.log(data);
+        return data;
+      } catch (error) {
+        
       }
     },
 

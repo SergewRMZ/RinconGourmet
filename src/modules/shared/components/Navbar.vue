@@ -30,7 +30,7 @@
           </li>
 
           <li class="nav-item">
-            <router-link v-if="this.isLogged" :to="{ name: 'Usuarios' }" class="nav-link">Usuarios</router-link>
+            <router-link v-if="this.isLogged" :to="{ name: 'RegistrarEmpleado' }" class="nav-link">Usuarios</router-link>
           </li>
 
           <li class="nav-item">
