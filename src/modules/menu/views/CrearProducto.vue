@@ -106,6 +106,7 @@ export default {
         }
 
         const responseProducto = await Product.crearProducto(data);
+        mostrarMensaje('Operación exitósa', 'Producto creado correctamente')
         console.log(responseProducto);
       } catch (error) {
         console.log(error);

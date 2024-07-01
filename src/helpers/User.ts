@@ -19,7 +19,8 @@ const User = (() => {
   };
 
   return {
-    loginUser
+    loginUser,
+
   }
 
 })();
