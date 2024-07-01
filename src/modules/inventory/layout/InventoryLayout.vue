@@ -5,8 +5,15 @@
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <router-link class="nav-link btn btn-primary pt-3 pb-3" :to="{ name: 'RegistrarEmpleado'}" exact>Registrar Empleado</router-link>
-              <router-link class="nav-link btn btn-primary py-2 px-3 mb-2" :to="{ name: 'RegistrarEmpleado'}" exact>Registrar Empleado</router-link>
+              <router-link class="nav-link btn btn-primary py-2 px-3 mb-2" :to="{ name: 'CrearInventario'}" exact>Registrar Inventario</router-link>
+            </li>
+
+            <li class="nav-item">
+              <router-link class="nav-link btn btn-primary py-2 px-3 mb-2" :to="{ name: 'ListarInventarios'}" exact>Gestionar Inventarios</router-link>
+            </li>
+
+            <li class="nav-item">
+              <router-link class="nav-link btn btn-primary py-2 px-3 mb-2" :to="{ name: 'RegistrarVenta'}" exact>Registrar Venta</router-link>
             </li>
           </ul>
         </div>
@@ -18,8 +25,6 @@
     </div>
   </div>
 </template>
-
-
 
 <style scoped>
 .nav-link {

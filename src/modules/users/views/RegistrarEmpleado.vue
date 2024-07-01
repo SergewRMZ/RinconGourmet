@@ -57,6 +57,10 @@ export default {
       email: 'juan@gmail.com',
       password: '12345678',
       role: 'ADMIN_ROLE',
+      name: '',
+      email: '',
+      password: '',
+      role: '',
     };
   },
 

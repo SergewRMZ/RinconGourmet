@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <h1 class="lobster-two-regular mt-4">Inventario</h1>    <div class="content">
-      <div class="inventory-form">
-        <h2>Agregar Nuevo Producto</h2>
+      
+      <div class="inventory-form mt-4">
+        <h2>Agregar Producto</h2>
         <div class="form-group">
-          <label>Nombre del Producto</label>
           <input v-model="newItem.nombre" placeholder="Nombre del Producto">
         </div>
         <div class="form-group">
@@ -12,13 +12,18 @@
           <input v-model.number="newItem.precio" type="number" placeholder="Precio Unitario">
         </div>
         <div class="form-group">
-          <label>Cantidad (kg)</label>
+          <label>Cantidad</label>
           <input v-model.number="newItem.cantidad" type="number" placeholder="Cantidad (kg)">
         </div>
-        <button class="btn-add" @click="addNewItem">Agregar Producto</button>
+        <div>
+          <button class="btn btn-success mt-3 me-2" @click="addNewItem">Agregar Producto</button>
+          <button class="btn btn-primary mt-3 me-2" @click="generateReport">Generar reporte</button>
+        </div>
       </div>
-      <div class="inventory-list" v-if="inventory.length > 0">
-        <table>
+
+
+      <div class="inventory-list mt-4" v-if="inventory.length > 0">
+        <table class="table table-hover table-striped">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -31,56 +36,91 @@
           <tbody>
             <tr v-for="item in inventory" :key="item.id">
               <td>{{ item.nombre }}</td>
-              <td>\${{ item.precio.toFixed(2) }}</td>
+              <td class="text-success fw-bold">\${{ item.precio.toFixed(2) }}</td>
               <td>{{ item.cantidad }} kg</td>
               <td>\${{ (item.precio * item.cantidad).toFixed(2) }}</td>
-              <td>
-                <button class="btn-action" @click="removeItem(item.id)">-</button>
-                <button class="btn-action" @click="addItem(item.id)">+</button>
-                <button class="delete-button" @click="deleteItem(item.id)">Eliminar</button>
+              <td class="d-flex justify-content-center">
+                <button class="btn btn-primary me-2" @click="removeItem(item.id)">-</button>
+                <button class="btn btn-primary me-2" @click="addItem(item.id)">+</button>
+                <button class="btn btn-danger" @click="deleteItem(item.id)">Eliminar</button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div v-else>
-        <p>No hay productos en el inventario.</p>
+      <div v-else class="mt-4 container w-50">
+        <p class="fw-bold fs-4 text-danger">No hay productos en el inventario.</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mostrarError, mostrarMensaje } from '@/alerts/alerts';
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
+      // inventory: [
+      //   { id: 1, nombre: 'Manzanas', precio: 2.5, cantidad: 10 },
+      //   { id: 2, nombre: 'Naranjas', precio: 3.0, cantidad: 8 },
+      //   { id: 3, nombre: 'Plátanos', precio: 1.2, cantidad: 15 },
+      // ],
       inventory: [],
       newItem: {
         nombre: '',
         precio: 0,
         cantidad: 0
-      }
+      },
+
+      month: '',
     };
   },
+
   methods: {
+    ...mapActions ('inventory', ['createInventory']),
+
     addItem(id) {
       const item = this.inventory.find(item => item.id === id);
       item.cantidad++;
     },
+
     removeItem(id) {
       const item = this.inventory.find(item => item.id === id);
       if (item.cantidad > 0) {
         item.cantidad--;
       }
     },
+
     deleteItem(id) {
       this.inventory = this.inventory.filter(item => item.id !== id);
     },
+
+    getCurrentDate () {
+      const date = new Date();
+      return date.toISOString().split('T')[0];
+    },    
+
     addNewItem() {
       if (this.newItem.nombre && this.newItem.precio > 0 && this.newItem.cantidad > 0) {
         const newItem = { ...this.newItem, id: Date.now() };
         this.inventory.push(newItem);
         this.newItem = { nombre: '', precio: 0, cantidad: 0 };
+      }
+    },
+
+    async generateReport () {
+      try {
+        const data = {
+          month: this.getCurrentDate(),
+          products: this.inventory,
+        };
+
+        await this.createInventory(data);
+        mostrarMensaje('Operación exitósa', 'Inventario registrado correctamente');
+      } catch (error) {
+        mostrarError('Error', error.response.data.error);
       }
     }
   }
@@ -101,10 +141,10 @@ export default {
 
 .inventory-form {
   flex: 1;
-  max-width: 300px;
+  max-width: 500px;
   margin-right: 20px;
   margin-bottom: 20px;
-  background: #f9f9f9;
+  background: #f5f5f5;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -113,6 +153,7 @@ export default {
 .inventory-form h2 {
   margin-bottom: 20px;
   font-size: 24px;
+  font-weight: bold;
   color: #333;
 }
 
@@ -133,19 +174,6 @@ export default {
   border-radius: 4px;
 }
 
-.btn-add {
-  background-color: #28a745;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn-add:hover {
-  background-color: #218838;
-}
-
 .inventory-list {
   flex: 2;
 }
@@ -163,39 +191,9 @@ export default {
   color: #333;
 }
 
-.inventory-list th {
-  background-color: #f2f2f2;
-}
-
 .inventory-actions button {
   padding: 5px 10px;
   margin: 0 5px;
-}
-
-.btn-action {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.btn-action:hover {
-  background-color: #0056b3;
-}
-
-.delete-button {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.delete-button:hover {
-  background-color: darkred;
 }
 
 p {

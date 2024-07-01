@@ -19,6 +19,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/admin/menu',
     name: 'Menu',
     component: () => import(/* webpackChunkName: "MenuAdmin" */ '@/modules/menu/layout/menuLayout.vue'),
+    
     children: [
       {
         path: 'create',
@@ -37,7 +38,27 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/admin/inventory',
     name: 'Inventory',
-    component: () => import(/* webpackChunkName: "Inventario" */ '@/modules/inventory/views/Inventario.vue')
+    component: () => import(/* webpackChunkName: "Inventario" */ '@/modules/inventory/layout/InventoryLayout.vue'),
+
+    children: [
+      {
+        path: 'create',
+        name: 'CrearInventario', 
+        component: () => import(/* webpackChunkName: "CrearInventario" */ '@/modules/inventory/views/Inventario.vue'),
+      },
+
+      {
+        path: 'get',
+        name: 'ListarInventarios',
+        component: () => import(/* webpackChunkName: "ListarInventarios" */ '@/modules/inventory/views/ListarInventarios.vue')
+      },
+
+      {
+        path: 'order',
+        name: 'RegistrarVenta',
+        component: () => import(/* webpackChunkName: "RegistrarVenta" */ '@/modules/order/views/RegistrarVenta.vue')
+      },
+    ]
   },
 
   {
@@ -56,6 +77,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'RegistrarEmpleado', 
         component: () => import(/* webpackChunkName: "RegistrarEmpleado" */ '@/modules/users/views/RegistrarEmpleado.vue'),
       }
+      },
     ]
   }
 ]

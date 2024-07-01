@@ -17,6 +17,7 @@ const User = (() => {
   };
 
   const registerUser = async (user: TypeUser) => {
+  const registerUser = async (user: User) => {
     try {
       const token = sessionStorage.getItem('TOKEN');
       if(!token) throw new Error('No se encontró el token de autenticación');
@@ -38,6 +39,26 @@ const User = (() => {
   return {
     loginUser,
     registerUser
+  };
+
+  const validateEmail = async () => {
+    try {
+      const token = sessionStorage.getItem('TOKEN');
+      if(!token) throw new Error('No se encontró el token de autenticación');
+      const response = await usersApi.get(`/validate-email/${token}`)
+      
+     return response.data;
+    } catch (error) {
+      console.error('Error al registrar usuario');
+      throw error;
+    }
+  }
+
+
+  return {
+    loginUser,
+    registerUser,
+    validateEmail
   }
 
 })();

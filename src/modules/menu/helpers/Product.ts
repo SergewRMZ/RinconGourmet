@@ -6,7 +6,6 @@ const Product = (() => {
     try {
       const token = sessionStorage.getItem('TOKEN');
       if (!token) throw new Error(`No se encontró el token de autenticación`);
-      console.log('Datos a envíar', producto);
       const response = await Api.post('/products', producto, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -21,7 +20,6 @@ const Product = (() => {
 
     } catch (error: any) {
       const response = error.response.data.error;
-      console.log(response);
       throw response;
     }
   };
