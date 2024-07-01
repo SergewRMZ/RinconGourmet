@@ -55,13 +55,7 @@ const routes: Array<RouteRecordRaw> = [
         path: 'form',
         name: 'RegistrarEmpleado', 
         component: () => import(/* webpackChunkName: "RegistrarEmpleado" */ '@/modules/users/views/RegistrarEmpleado.vue'),
-      },
-
-      {
-        path: 'empleados',
-        name: 'ListarEmpleado',
-        component: () => import(/* webpackChunkName: "ListarEmpleado" */ '@/modules/users/views/ListarEmpleado.vue')
-      },
+      }
     ]
   }
 ]

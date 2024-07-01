@@ -28,7 +28,7 @@ const userStore = {
       sessionStorage.setItem('logged', isLogin.toString());
     },
     
-    setToken(state: UserState, token:string | null) {
+    setToken(state: UserState, token: string | null) {
       state.token = token;
       sessionStorage.setItem('TOKEN', token!);
     },
@@ -43,18 +43,18 @@ const userStore = {
       sessionStorage.setItem('nombre', name!);
     },
 
-    setEmail (state: UserState, email: string | null) {
+    setEmail(state: UserState, email: string | null) {
       state.email = email;
       sessionStorage.setItem('email', email!);
     },
 
-    setMessage(state: UserState, message:string | null) {
+    setMessage(state: UserState, message: string | null) {
       state.message_error = message;
     }
   },
 
   actions: {
-    async login ({ commit }:any, user:TypeUser) {
+    async login ({ commit }: any, user: TypeUser) {
       try {
         const data = await User.loginUser(user);
         if (data.user.role[0] !== 'ADMIN_ROLE') throw new Error('Acceso denegado, necesitas ser administrador');
@@ -64,15 +64,23 @@ const userStore = {
         commit('setEmail', data.user.email);
         commit('setUserId', data.user.id);
         commit('setLoggedIn', true); 
-      } 
-      
-      catch (error:any) {
-        commit('setMessage', error.response ? error.response.data.error : error);
+      } catch (error: any) {
+        commit('setMessage', error.response ? error.response.data.error : error.message);
         throw error;
       }
     },
 
-    async logout ({ commit }: any) {
+    async registerUser({ commit }: any, user: TypeUser) {
+      try {
+        const data = await User.registerUser(user);
+        return data;
+      } catch (error: any) {
+        commit('setMessage', error.response ? error.response.data.error : error.message);
+        throw error;
+      }
+    },
+
+    async logout({ commit }: any) {
       sessionStorage.removeItem('TOKEN');
       sessionStorage.removeItem('email');
       sessionStorage.removeItem('userId');
@@ -80,7 +88,7 @@ const userStore = {
       sessionStorage.removeItem('logged');
       
       commit('setLoggedIn', false);
-      await new Promise (resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 500));
     }
   }
 };
