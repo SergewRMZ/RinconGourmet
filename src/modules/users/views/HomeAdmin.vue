@@ -5,13 +5,7 @@
 </template>
 
 <script>
-import { defineComponent, defineAsyncComponent } from 'vue'
 
-  export default {
-    components: {
-      NavbarAdmin: defineAsyncComponent(() => import(/* webpackChuckName: "NavbarAdmin" */ '@/modules/users/components/NavbarAdmin.vue'))
-    }
-  }
 </script>
 
 <style scoped>

@@ -10,15 +10,7 @@
       />
     </div>
 
-    <div class="w-50">
-      <input
-        type="number"
-        min="10"
-        class="form-control"
-        v-model="cantidad"
-        placeholder="Cantidad de elementos"
-      />
-    </div>
+    1
 
     <div class="btn btn-primary" @click="buscarProductos">Buscar</div>
   </div>

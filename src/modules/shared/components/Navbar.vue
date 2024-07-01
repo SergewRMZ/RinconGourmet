@@ -26,7 +26,7 @@
           </li>
 
           <li class="nav-item">
-            <router-link v-if="this.isLogged" :to="{ name: 'Inventory' }" class="nav-link">Inventario</router-link>
+            <router-link v-if="this.isLogged" :to="{ name: 'CrearInventario' }" class="nav-link">Inventario</router-link>
           </li>
 
           <li class="nav-item">
