@@ -91,16 +91,6 @@ const userStore = {
       }
     },
 
-    async validateEmail ({ commit }: any) {
-      try {
-        const data = await User.validateEmail();
-        console.log(data);
-        return data;
-      } catch (error) {
-        
-      }
-    },
-
     async logout ({ commit }: any) {
       sessionStorage.removeItem('TOKEN');
       sessionStorage.removeItem('email');

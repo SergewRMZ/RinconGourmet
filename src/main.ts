@@ -6,9 +6,9 @@ import store from './store/index';
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faArrowRight, faArrowLeft, faUser, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faArrowLeft, faUser, faUserCircle, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
-library.add(faArrowRight, faUser, faUserCircle);
+library.add(faArrowRight, faUser, faUserCircle, faEnvelope);
 library.add(faArrowLeft);
 
 
