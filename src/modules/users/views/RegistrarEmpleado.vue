@@ -53,10 +53,6 @@ import { mostrarError, mostrarMensaje } from '@/alerts/alerts';
 export default {
   data() {
     return {
-      name: 'Yael',
-      email: 'juan@gmail.com',
-      password: '12345678',
-      role: 'ADMIN_ROLE',
       name: '',
       email: '',
       password: '',

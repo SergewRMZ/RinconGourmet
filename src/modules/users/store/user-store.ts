@@ -30,7 +30,7 @@ const userStore = {
       sessionStorage.setItem('logged', isLogin.toString());
     },
     
-    setToken(state: UserState, token: string | null) {
+    setToken(state: UserState, token:string | null) {
       state.token = token;
       sessionStorage.setItem('TOKEN', token!);
     },
@@ -45,12 +45,12 @@ const userStore = {
       sessionStorage.setItem('nombre', name!);
     },
 
-    setEmail(state: UserState, email: string | null) {
+    setEmail (state: UserState, email: string | null) {
       state.email = email;
       sessionStorage.setItem('email', email!);
     },
 
-    setMessage(state: UserState, message: string | null) {
+    setMessage(state: UserState, message:string | null) {
       state.message_error = message;
     },
 
@@ -60,7 +60,7 @@ const userStore = {
   },
 
   actions: {
-    async login ({ commit }: any, user: TypeUser) {
+    async login ({ commit }:any, user:TypeUser) {
       try {
         const data = await User.loginUser(user);
         if (data.user.role[0] !== 'ADMIN_ROLE') throw new Error('Acceso denegado, necesitas ser administrador');
@@ -70,9 +70,6 @@ const userStore = {
         commit('setName', data.user.name);
         commit('setEmail', data.user.email);
         commit('setUserId', data.user.id);
-        commit('setLoggedIn', true); 
-      } catch (error: any) {
-        commit('setMessage', error.response ? error.response.data.error : error.message);
         commit('setLoggedIn', true);
         commit('setEmailValidated', data.user.emailValidated) 
       } 
@@ -94,7 +91,6 @@ const userStore = {
       }
     },
 
-    async logout({ commit }: any) {
     async validateEmail ({ commit }: any) {
       try {
         const data = await User.validateEmail();
@@ -113,7 +109,7 @@ const userStore = {
       sessionStorage.removeItem('logged');
       
       commit('setLoggedIn', false);
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise (resolve => setTimeout(resolve, 500));
     }
   }
 };

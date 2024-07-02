@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
-    <h2>Listar Inventarios</h2>
+  <div>
+    <h2 class="lobster-two-regular mt-4">Listar Inventarios</h2>
   </div>
 </template>

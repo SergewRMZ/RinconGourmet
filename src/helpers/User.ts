@@ -1,22 +1,23 @@
 import { usersApi } from "@/api/api";
-import TypeUser from "@/interfaces/user-interface";
+import User from "@/interfaces/user-interface";
 
 const User = (() => {
 
-  const loginUser = async (user: TypeUser) => {
+  const loginUser = async (user: User) => {
     try {
       const response = await usersApi.post('/login', user);
       if (response.status === 200)
         return response.data;
+
       else 
         console.log(response.statusText);
+
     } catch (error) {
       console.error('Error al iniciar sesión');
       throw error;
     }
   };
 
-  const registerUser = async (user: TypeUser) => {
   const registerUser = async (user: User) => {
     try {
       const token = sessionStorage.getItem('TOKEN');
@@ -34,11 +35,6 @@ const User = (() => {
       console.error('Error al registrar usuario');
       throw error;
     }
-  }
-
-  return {
-    loginUser,
-    registerUser
   };
 
   const validateEmail = async () => {
