@@ -112,14 +112,14 @@ a, a:hover, a:focus {
 
 #sidebar ul li a:hover, #sidebar ul li.active > a, a[aria-expanded="true"] {
   color: #fff;
-  background: #6d7fcc;
+  background: #1f3285;
   box-shadow: inset 0 0 10px #000; /* Sombra de color negro */
 }
 
 ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
-  background: #6d7fcc;
+  background: #1f3285;
 }
 
 .btn {
@@ -138,7 +138,7 @@ ul ul a {
 export default {
   mounted() {
     var sidebarCollapse = document.getElementById('sidebarCollapse');
-    var sidebar = document.getElementById('sidebar'); // Suponiendo que tu menú lateral tiene el id 'sidebar'
+    var sidebar = document.getElementById('sidebar'); 
 
     sidebarCollapse.addEventListener('click', function() {
         sidebar.classList.toggle('active');
