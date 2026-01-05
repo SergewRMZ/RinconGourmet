@@ -19,18 +19,20 @@ const routes: Array<RouteRecordRaw> = [
     path: '/admin/menu',
     name: 'Menu',
     component: () => import(/* webpackChunkName: "MenuAdmin" */ '@/modules/menu/layout/menuLayout.vue'),
-    
+    beforeEnter: isAuthenticatedGuard,
     children: [
       {
         path: 'create',
         name: 'CrearProducto', 
         component: () => import(/* webpackChunkName: "CrearProducto" */ '@/modules/menu/views/CrearProducto.vue'),
+        beforeEnter: isAuthenticatedGuard
       },
 
       {
         path: 'productos',
         name: 'ListarProductos',
-        component: () => import(/* webpackChunkName: "ListarProductos" */ '@/modules/menu/views/ListarProductos.vue')
+        component: () => import(/* webpackChunkName: "ListarProductos" */ '@/modules/menu/views/ListarProductos.vue'),
+        beforeEnter: isAuthenticatedGuard
       },
     ]
   },
@@ -39,24 +41,27 @@ const routes: Array<RouteRecordRaw> = [
     path: '/admin/inventory',
     name: 'Inventory',
     component: () => import(/* webpackChunkName: "Inventario" */ '@/modules/inventory/layout/InventoryLayout.vue'),
-
+    beforeEnter: isAuthenticatedGuard,
     children: [
       {
         path: 'create',
         name: 'CrearInventario', 
         component: () => import(/* webpackChunkName: "CrearInventario" */ '@/modules/inventory/views/Inventario.vue'),
+        beforeEnter: isAuthenticatedGuard
       },
 
       {
         path: 'get',
         name: 'ListarInventarios',
-        component: () => import(/* webpackChunkName: "ListarInventarios" */ '@/modules/inventory/views/ListarInventarios.vue')
+        component: () => import(/* webpackChunkName: "ListarInventarios" */ '@/modules/inventory/views/ListarInventarios.vue'),
+        beforeEnter: isAuthenticatedGuard
       },
 
       {
         path: 'order',
         name: 'RegistrarVenta',
-        component: () => import(/* webpackChunkName: "RegistrarVenta" */ '@/modules/order/views/RegistrarVenta.vue')
+        component: () => import(/* webpackChunkName: "RegistrarVenta" */ '@/modules/order/views/RegistrarVenta.vue'),
+        beforeEnter: isAuthenticatedGuard
       },
     ]
   },
@@ -64,18 +69,22 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/admin/reservations',
     name: 'Reservation',
-    component: () => import(/* webpackChunckName: "Reservation" */ '@/modules/reservation/views/Reservation.vue')
+    component: () => import(/* webpackChunckName: "Reservation" */ '@/modules/reservation/views/Reservation.vue'),
+    beforeEnter: isAuthenticatedGuard
   },
 
   {
     path: '/admin/users',
     name: 'Usuarios',
     component: () => import(/* webpackChunckName: "Usuarios" */ '@/modules/users/layout/usuarioLayout.vue'),
+    beforeEnter: isAuthenticatedGuard,
+
     children: [
       {
         path: 'form',
         name: 'RegistrarEmpleado', 
         component: () => import(/* webpackChunkName: "RegistrarEmpleado" */ '@/modules/users/views/RegistrarEmpleado.vue'),
+        beforeEnter: isAuthenticatedGuard
       },
     ]
   }

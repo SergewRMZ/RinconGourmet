@@ -81,14 +81,16 @@ export default {
 </script>
 
 <style scoped>
-  div a {
+  /* Estilo para los enlaces dentro de la navbar */
+  .navbar-nav .nav-link {
     margin: 0 20px;
     text-decoration: none;
     font-weight: bold;
     color: white;
   }
 
-  div .router-link-exact-active {
-    color: #fff58c;
+  /* Estilo para el enlace activo */
+  .navbar-nav .router-link-exact-active {
+    color: #fff58c; /* Amarillo */
   }
 </style>

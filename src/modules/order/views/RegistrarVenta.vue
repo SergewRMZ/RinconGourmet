@@ -1,94 +1,101 @@
 <template>
-  <div class="container">
-    <h2 class="mt-3 fw-bold lobster-two-regular text-center">Registrar Venta</h2>
+  <div class="">
+    <div class="container bg-image">
+      <h2 class="mt-3 fw-bold lobster-two-regular text-center">Registrar Venta</h2>
 
-    <!-- Sección del Cliente -->
-    <div class="row justify-content-center mt-3">
-      <div class="w-75">
-        <div class="card">
-          <div class="card-header bg-dark text-white">
-            <h5 class="card-title lobster-two-regular">Datos del Cliente</h5>
-          </div>
-          <div class="card-body">
-            <form @submit.prevent="RegistrarVenta">
-              <div class="mb-3">
-                <label for="clientName" class="form-label">Nombre del Cliente</label>
-                <input type="text" v-model="clientName" id="clientName" class="form-control" placeholder="Nombre del cliente" required>
-              </div>
+      <!-- Sección del Cliente -->
+      <div class="row">
 
-              <div class="mb-3">
-                <label for="saleDate" class="form-label">Fecha</label>
-                <input type="date" v-model="saleDate" id="saleDate" class="form-control" required>
-              </div>
+        <div class="col-6">
+          <div class="row justify-content-center mt-3">
+        <div class="w-100">
+          <div class="card">
+            <div class="card-header bg-dark text-white">
+              <h5 class="card-title lobster-two-regular">Datos del Cliente</h5>
+            </div>
+            <div class="card-body">
 
-              <div class="mb-3">
-                <label for="saleTime" class="form-label">Hora</label>
-                <input type="time" v-model="saleTime" id="saleTime" class="form-control" required>
-              </div>
+              <!-- Formulario -->
+              <form @submit.prevent="RegistrarVenta">
+                <div class="mb-3">
+                  <input type="text" v-model="clientName" class="form-control" placeholder="Nombre del cliente" required>
+                </div>
 
-              <div class="mb-3">
-                <label for="paymentMethod" class="form-label">Método de Pago</label>
-                <select v-model="paymentMethod" id="paymentMethod" class="form-control" required>
-                  <option value="" disabled selected>Seleccione el método de pago</option>
-                  <option value="cash">Efectivo</option>
-                  <option value="credit">Tarjeta de Crédito</option>
-                </select>
-              </div>
+                <div class="mb-3">
+                  <input type="date" v-model="saleDate" id="saleDate" class="form-control" required>
+                </div>
 
-              <!-- Sección de Productos Seleccionados -->
-              <div v-if="productsSelected.length > 0">
-                <ul class="list-unstyled text-start">
-                  <li v-for="(product, index) in productsSelected" :key="index">
-                    {{ product.name }} - ${{ product.price }}
-                  </li>
-                </ul>
-              </div>
-              <!-- Fin de Sección de Productos Seleccionados -->
+                <div class="mb-3">
+                  <input type="time" v-model="saleTime" id="saleTime" class="form-control" required>
+                </div>
 
-              <button class="btn btn-success" type="submit">
-                Registrar Venta
-              </button>
-            </form>
+                <div class="mb-3">
+                  <select v-model="paymentMethod" id="paymentMethod" class="form-control" required>
+                    <option value="" disabled selected>Seleccione el método de pago</option>
+                    <option value="cash">Efectivo</option>
+                    <option value="credit">Tarjeta de Crédito</option>
+                  </select>
+                </div>
 
-            
+                <!-- Sección de Productos Seleccionados -->
+                <h2 class="lobster-two-regular-italic">Consumo</h2>
+                <div v-if="productsSelected.length > 0">
+                  <ul class="list-unstyled text-start">
+                    <li v-for="(product, index) in productsSelected" :key="index">
+                      {{ product.name }} - <span class="text-success fw-bold">${{ product.price }}</span>
+                    </li>
+                  </ul>
+                </div>
+                <!-- Fin de Sección de Productos Seleccionados -->
 
+                <button class="btn btn-success" type="submit">
+                  Registrar Venta
+                </button>
+              </form>
+
+            </div>
           </div>
         </div>
       </div>
-    </div>
+          
+        </div>
 
-    <!-- Sección de Productos -->
-    <div class="row justify-content-center mt-3">
-      <div class="w-75">
-        <div class="card">
-          <div class="card-body">
-            <div class="mb-3">
-              <label for="productName" class="form-label">Buscar Producto</label>
-              <input type="text" v-model="searchProduct" @input="searchProducts" id="productName" class="form-control" placeholder="Buscar producto...">
-            </div>
+        <div class="col-6">
+          <!-- Sección de Productos -->
+          <div class="row justify-content-center mt-3">
+            <div class="w-75">
+              <div class="card">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="productName" class="form-label">Buscar Producto</label>
+                    <input type="text" v-model="searchProduct" @input="searchProducts" id="productName" class="form-control" placeholder="Buscar producto...">
+                  </div>
 
-            <div class="list-group">
-              <a class="list-group-item list-group-item-action text-start" v-for="product in filteredProducts" :key="product.id" @click="selectProduct(product)">
-                {{ product.name }} - <span class="text-success fw-bold">${{ product.price }}</span>
-              </a>
-            </div>
+                  <div class="list-group">
+                    <a class="list-group-item list-group-item-action text-start" v-for="product in filteredProducts" :key="product.id" @click="selectProduct(product)">
+                      {{ product.name }} - <span class="text-success fw-bold">${{ product.price }}</span>
+                    </a>
+                  </div>
 
-            <!-- Modal flotante con CSS -->
-            <div class="modal" v-if="selectedProduct">
-              <div class="modal-content">
-                <span class="close" @click="closeModal">&times;</span>
-                <h5>Producto Seleccionado:</h5>
-                <div class="text-start">
-                  <p><strong>ID:</strong> {{ selectedProduct.id }}</p>
-                  <p><strong>Categoría:</strong> {{ selectedProduct.category.name }}</p>
-                  <p><strong>Nombre:</strong> {{ selectedProduct.name }}</p>
-                  <p><strong>Precio:</strong> <span class="text-success fw-bold">${{ selectedProduct.price }}</span></p>
+                  <!-- Modal flotante con CSS -->
+                  <div class="modal" v-if="selectedProduct">
+                    <div class="modal-content">
+                      <span class="close" @click="closeModal">&times;</span>
+                      <h5>Producto Seleccionado:</h5>
+                      <div class="text-start">
+                        <p><strong>ID:</strong> {{ selectedProduct.id }}</p>
+                        <p><strong>Categoría:</strong> {{ selectedProduct.category.name }}</p>
+                        <p><strong>Nombre:</strong> {{ selectedProduct.name }}</p>
+                        <p><strong>Precio:</strong> <span class="text-success fw-bold">${{ selectedProduct.price }}</span></p>
+                      </div>
+                      <button type="button" class="btn btn-primary" @click="addItem">Agregar Producto</button>
+                    </div>
+                  </div>
+                  <!-- Fin de Modal flotante con CSS -->
+
                 </div>
-                <button type="button" class="btn btn-primary" @click="addItem">Agregar Producto</button>
               </div>
             </div>
-            <!-- Fin de Modal flotante con CSS -->
-
           </div>
         </div>
       </div>
@@ -97,6 +104,7 @@
 </template>
 
 <script>
+import { mostrarError, mostrarMensaje } from '@/alerts/alerts';
 import { mapActions, mapState } from 'vuex';
 
 export default {
@@ -158,10 +166,10 @@ export default {
           products: productsId
         }
 
-
+        mostrarMensaje('Operación exitósa', 'Venta registrada correctamente')
         await this.registerOrder(data);
       } catch (error) {
-        
+        mostrarError('ERROR', 'Error al realizar le petición')
       }
     }
   },
@@ -212,4 +220,13 @@ export default {
   text-decoration: none;
   cursor: pointer;
 }
+
+/* .bg-image {
+  background: url('@/assets/Productos.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden
+} */
 </style>
